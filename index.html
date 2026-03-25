@@ -1,122 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Neha's Space</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Neha — Mindset & Clarity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f0;
+      --mid: #888;
+      --border: rgba(255,255,255,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #fff;
-      color: #111;
-      line-height: 1.6;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
     }
 
-    /* Navigation */
+    /* Custom Cursor */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--white);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(245,245,240,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), width 0.3s, height 0.3s;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Grain Overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.35;
+    }
+
+    /* NAV */
     nav {
-      background: #000;
-      padding: 15px 30px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 28px 48px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+      mix-blend-mode: difference;
     }
-    nav a {
-      color: #fff;
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      color: var(--white);
       text-decoration: none;
-      margin: 0 20px;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #999;
     }
 
-    /* Hero */
-    header {
-      background: #111;
-      color: #fff;
-      text-align: center;
-      padding: 80px 20px;
-    }
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5em;
-      margin: 0;
-    }
-    header p {
-      font-size: 1.3em;
-      margin-top: 10px;
-      opacity: 0.9;
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
     }
 
-    /* Sections */
-    section {
-      padding: 60px 20px;
-      max-width: 900px;
-      margin: auto;
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
     }
-    section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2em;
-      border-bottom: 2px solid #000;
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .card {
-      background: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 15px 0;
-      transition: transform 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
+    .nav-links a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0 48px;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Footer */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 10vw, 10rem);
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+
+    .hero-title em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 0.78em;
+      display: block;
+      color: var(--white);
+    }
+
+    .hero-sub {
+      margin-top: 32px;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: rgba(245,245,240,0.55);
+      max-width: 340px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--white);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+      transition: gap 0.3s;
+    }
+    .hero-cta:hover { gap: 22px; }
+    .hero-cta::after {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--white);
+      display: block;
+      transition: width 0.3s;
+    }
+    .hero-cta:hover::after { width: 64px; }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .hero-number {
+      position: absolute;
+      right: 0; top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(12rem, 24vw, 22rem);
+      color: rgba(245,245,240,0.04);
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-vertical {
+      position: absolute;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeIn 1s 1.2s forwards;
+    }
+
+    .hero-vertical span {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--mid));
+      animation: scrollLine 2s 1.5s infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 48px;
+    }
+
+    /* ABOUT */
+    .about {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      padding-top: 6px;
+    }
+
+    .about-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.3;
+      margin-bottom: 32px;
+    }
+
+    .about-body h2 em {
+      font-style: italic;
+      color: rgba(245,245,240,0.5);
+    }
+
+    .about-body p {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: rgba(245,245,240,0.55);
+      max-width: 560px;
+    }
+
+    /* SERIES */
+    .series {
+      padding: 80px 48px 120px;
+    }
+
+    .series-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .series-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .series-header a {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .series-header a:hover { color: var(--white); border-color: var(--white); }
+
+    .series-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .series-card {
+      background: rgba(255,255,255,0.03);
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: none;
+    }
+    .series-card:hover { background: rgba(255,255,255,0.06); }
+
+    .series-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--white);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      z-index: 0;
+    }
+    .series-card:hover::before { transform: scaleX(1); }
+    .series-card:hover * { color: var(--black) !important; position: relative; z-index: 1; }
+
+    .card-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: rgba(245,245,240,0.45);
+    }
+
+    /* QUOTE */
+    .quote-section {
+      padding: 100px 48px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      line-height: 0.6;
+      color: rgba(245,245,240,0.08);
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.45;
+      color: rgba(245,245,240,0.85);
+    }
+
+    .quote-text strong {
+      font-style: normal;
+      color: var(--white);
+    }
+
+    /* CONNECT */
+    .connect {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .connect h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+    }
+
+    .connect-links {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .connect-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--white);
+      transition: padding-left 0.3s;
+    }
+    .connect-item:hover { padding-left: 16px; }
+
+    .connect-item span:first-child {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .connect-item span:last-child {
+      font-size: 0.72rem;
+      color: var(--mid);
+      letter-spacing: 0.1em;
+    }
+
+    /* FOOTER */
     footer {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 30px;
-      margin-top: 40px;
+      padding: 40px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.7rem;
+      color: rgba(245,245,240,0.3);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: rgba(245,245,240,0.3);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 0 24px; }
+      .hero-right { display: none; }
+      .hero-left { padding-bottom: 60px; padding-top: 120px; }
+      .divider { margin: 0 24px; }
+      .about { grid-template-columns: 1fr; gap: 24px; padding: 80px 24px; }
+      .series { padding: 60px 24px 80px; }
+      .series-grid { grid-template-columns: 1fr; }
+      .series-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .quote-section { padding: 80px 24px; grid-template-columns: 1fr; gap: 8px; }
+      .connect { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
     }
   </style>
 </head>
 <body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
   <nav>
-    <a href="#about">About</a>
-    <a href="#resources">Resources</a>
-    <a href="#contact">Contact</a>
+    <a class="nav-logo" href="#">its.neha.journal</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#series">The Series</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
   </nav>
 
-  <header>
-    <h1>Neha's Space</h1>
-    <p>Mindset • Clarity • Students • Unlearning</p>
-  </header>
-
-  <section id="about">
-    <h2>About Me</h2>
-    <p>I make videos about the stuff nobody tells you — the mindset shifts, the soft resets, the small clarity that changes everything.</p>
-    <p>Not a guru. Not a life coach with a 12‑step plan. Just someone who started with a grocery list and somehow ended up talking about how we think, unlearn, and restart.</p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Mindset · Clarity · Unlearning</p>
+      <h1 class="hero-title">
+        UN<br/>LEARN
+        <em>with neha</em>
+      </h1>
+      <p class="hero-sub">
+        Not a guru. Not a life coach.<br/>
+        Just someone figuring it out — and talking about it honestly.
+      </p>
+      <a class="hero-cta" href="https://instagram.com/its.neha.journal" target="_blank">Follow the journey</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-number">01</div>
+      <div class="hero-vertical">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
   </section>
 
-  <section id="resources">
-    <h2>Resources</h2>
-    <div class="card">📝 <strong>Mindset Shifts</strong> – Practical ways to reset your thinking.</div>
-    <div class="card">📚 <strong>Clarity Guides</strong> – Simple frameworks for everyday focus.</div>
-    <div class="card">🎓 <strong>Student Tools</strong> – Notes and templates to study smarter.</div>
-    <div class="card">🔄 <strong>Unlearning Practices</strong> – Letting go of what no longer serves you.</div>
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <p class="section-label reveal">About</p>
+    <div class="about-body">
+      <h2 class="reveal">
+        The things nobody tells you — <em>about growing up, letting go, and thinking clearly.</em>
+      </h2>
+      <p class="reveal">
+        I make content for Indian students and young adults who are quietly dealing with things 
+        they can't always explain — feeling stuck, overthinking, trying to fit into expectations 
+        that were never really theirs. This is a space to unlearn all of that. 
+        Honest, unfiltered, and always in progress.
+      </p>
+    </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Let’s connect! Reach me at <a href="mailto:nehasingh.sh9@gmail.com">nehasingh.sh9@gmail.com</a></p>
+  <!-- SERIES -->
+  <section class="series" id="series">
+    <div class="series-header reveal">
+      <h2>The Unlearn<br/>Series</h2>
+      <a href="https://www.instagram.com/p/DU3L2hKD44Y/" target="_blank">View all reels →</a>
+    </div>
+    <div class="series-grid">
+      <div class="series-card reveal">
+        <span class="card-num">001</span>
+        <p class="card-title">Productivity guilt is not discipline</p>
+        <p class="card-desc">Rest isn't a reward. The belief that you have to earn rest is the first thing to unlearn.</p>
+      </div>
+      <div class="series-card reveal">
+        <span class="card-num">002</span>
+        <p class="card-title">You don't have to be consistent to be worthy</p>
+        <p class="card-desc">Showing up imperfectly still counts. The pressure to be "on" every day is exhausting and false.</p>
+      </div>
+      <div class="series-card reveal">
+        <span class="card-num">003</span>
+        <p class="card-title">Har cheez explain karna zaroori nahi</p>
+        <p class="card-desc">You don't owe anyone a reason for your boundaries, your choices, or your silence.</p>
+      </div>
+    </div>
   </section>
 
+  <!-- QUOTE -->
+  <div class="quote-section">
+    <div class="quote-mark reveal">"</div>
+    <p class="quote-text reveal">
+      clarity isn't a destination.<br/>
+      it's just <strong>choosing to be honest with yourself</strong> — one thought at a time.
+    </p>
+  </div>
+
+  <!-- CONNECT -->
+  <section class="connect" id="connect">
+    <h2 class="reveal">Let's<br/>connect.</h2>
+    <div class="connect-links">
+      <a class="connect-item reveal" href="https://instagram.com/its.neha.journal" target="_blank">
+        <span>Instagram</span>
+        <span>@its.neha.journal →</span>
+      </a>
+      <a class="connect-item reveal" href="mailto:nehasingh.sh9@gmail.com">
+        <span>Email</span>
+        <span>nehasingh.sh9@gmail.com →</span>
+      </a>
+      <a class="connect-item reveal" href="https://www.instagram.com/p/DU3L2hKD44Y/" target="_blank">
+        <span>The Unlearn Series</span>
+        <span>Watch reels →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <p>© 2026 Neha's Space | Black & White Aesthetic</p>
+    <p>© 2025 Neha · Mindset & Clarity</p>
+    <span class="footer-logo">its.neha.journal</span>
+    <p>Made with honesty.</p>
   </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, .series-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width = '56px';
+        ring.style.height = '56px';
+        ring.style.borderColor = 'rgba(245,245,240,0.7)';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width = '36px';
+        ring.style.height = '36px';
+        ring.style.borderColor = 'rgba(245,245,240,0.4)';
+      });
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
