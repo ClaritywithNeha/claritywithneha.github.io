@@ -5,19 +5,34 @@
   <title>Neha's Space</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
-    /* Global styles */
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: #fefefe;
       color: #444;
-      line-height: 1.6;
+    }
+
+    /* Navigation bar */
+    nav {
+      background: #6c63ff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #ff9a9e;
     }
 
     /* Hero section */
     header {
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      color: #2c2c2c;
       text-align: center;
       padding: 80px 20px;
     }
@@ -32,7 +47,6 @@
       opacity: 0.8;
     }
 
-    /* Section styling */
     section {
       padding: 60px 20px;
       max-width: 1000px;
@@ -40,28 +54,10 @@
     }
     section h2 {
       font-family: 'Playfair Display', serif;
-      color: #ff6f91;
+      color: #6c63ff;
       margin-bottom: 20px;
-      font-size: 2em;
-    }
-    section p {
-      font-size: 1.1em;
     }
 
-    /* Card layout */
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 25px;
-      margin: 20px 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    /* Footer */
     footer {
       background: #2c2c2c;
       color: #fff;
@@ -72,28 +68,32 @@
   </style>
 </head>
 <body>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#resources">Resources</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
   <header>
     <h1>Neha's Space</h1>
     <p>✨ Clarity, Mindset & Everyday Growth ✨</p>
   </header>
 
-  <section>
+  <section id="about">
     <h2>About Me</h2>
-    <p>Welcome to my space! I share practical wisdom with humor and warmth, blending clarity with growth. 
-       My goal is to make wisdom accessible and joyful.</p>
+    <p>Welcome to my space! I share practical wisdom with humor and warmth, blending insights to make wisdom accessible and joyful.</p>
   </section>
 
-  <section>
+  <section id="resources">
     <h2>Resources</h2>
-    <div class="card">🌸 Daily Clarity Templates</div>
-    <div class="card">📘 Growth Guides & Routines</div>
-    <div class="card">💡 Playful Insights & Reflections</div>
+    <p>🌸 Daily Clarity Templates</p>
+    <p>📘 Growth Guides & Routines</p>
+    <p>💡 Playful Insights & Reflections</p>
   </section>
 
-  <section>
+  <section id="contact">
     <h2>Contact</h2>
-    <p>Let’s connect! Reach me at 
-       <a href="mailto:your-email@example.com">your-email@example.com</a>.</p>
+    <p>Let’s connect! Reach me at <a href="mailto:your-email@example.com">your-email@example.com</a>.</p>
   </section>
 
   <footer>
