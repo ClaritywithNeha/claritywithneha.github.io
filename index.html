@@ -506,6 +506,52 @@
       body { cursor: auto; }
       .cursor, .cursor-ring { display: none; }
     }
+
+    /* JOURNAL */
+    :root { --gold: #c8a97e; }
+    .jr { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 120px 48px; border-top: 1px solid var(--border); }
+    .media { display: flex; justify-content: center; }
+    .media video, .media img { width: 100%; max-width: 360px; aspect-ratio: 9/16; object-fit: cover; display: block; background: #111; border: 1px solid var(--border); cursor: auto; }
+    .j-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 11vw, 9.5rem); line-height: 0.9; }
+    .j-title span { color: var(--gold); }
+    .j-by { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: rgba(245,245,240,0.7); margin: 18px 0 28px; }
+    .j-lede { font-size: 0.95rem; line-height: 1.85; color: rgba(245,245,240,0.6); max-width: 480px; }
+    .j-tag { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--gold); margin: 28px 0 36px; }
+    .j-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.25; margin-bottom: 24px; max-width: 560px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0 40px; }
+    .jcta { display: inline-flex; align-items: center; gap: 14px; margin-top: 12px; color: var(--white); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; transition: gap 0.3s; }
+    .jcta::after { content: ''; width: 40px; height: 1px; background: currentColor; transition: width 0.3s; }
+    .jcta:hover { gap: 22px; }
+    .jcta:hover::after { width: 64px; }
+    .jcta.p { color: var(--gold); }
+    .steps { list-style: none; counter-reset: s; margin-top: 36px; max-width: 560px; }
+    .steps li { counter-increment: s; display: grid; grid-template-columns: 44px 1fr; gap: 6px 16px; padding: 22px 0; border-top: 1px solid var(--border); }
+    .steps li::before { content: counter(s); grid-row: span 2; font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; line-height: 1; color: var(--gold); }
+    .steps b { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.35rem; }
+    .steps p { font-size: 0.85rem; line-height: 1.7; color: rgba(245,245,240,0.5); }
+    .steps li.dump { border: 1px dashed rgba(200,169,126,0.55); padding: 22px 16px; margin: -1px 0; }
+    .j-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: rgba(245,245,240,0.6); border-top: 1px solid var(--border); padding-top: 22px; max-width: 560px; }
+    .spec { max-width: 560px; margin-bottom: 28px; }
+    .spec div { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .spec dt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid); padding-top: 3px; }
+    .spec dd { font-size: 0.95rem; line-height: 1.6; color: rgba(245,245,240,0.8); }
+    .why, .pts { list-style: none; max-width: 560px; }
+    .why { margin: 28px 0 8px; }
+    .why li { display: flex; gap: 14px; padding: 12px 0; font-size: 0.92rem; line-height: 1.6; color: rgba(245,245,240,0.6); }
+    .why li::before { content: ''; flex: none; width: 14px; height: 1px; background: var(--gold); margin-top: 0.85em; }
+    .why b { font-weight: 400; color: var(--white); }
+    .pts { margin: 28px 0 36px; }
+    .pts li { padding: 20px 0; border-top: 1px solid var(--border); }
+    .pts li:last-child { border-bottom: 1px solid var(--border); }
+    .pts b { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.35rem; margin-bottom: 6px; }
+    .pts p { font-size: 0.85rem; line-height: 1.7; color: rgba(245,245,240,0.5); }
+    a:focus-visible, video:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+    .cta-row .hero-cta { margin-top: 44px; }
+    @media (max-width: 768px) {
+      .jr { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+      .spec div { grid-template-columns: 90px 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { .reveal { transition: none; } }
   </style>
 </head>
 <body>
@@ -518,6 +564,7 @@
     <a class="nav-logo" href="#">its.neha.journal</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#journal">The Journal</a></li>
       <li><a href="#series">The Series</a></li>
       <li><a href="#connect">Connect</a></li>
     </ul>
@@ -535,7 +582,10 @@
         Not a guru. Not a life coach.<br/>
         Just someone figuring it out — and talking about it honestly.
       </p>
-      <a class="hero-cta" href="https://instagram.com/its.neha.journal" target="_blank">Follow the journey</a>
+      <div class="cta-row">
+        <a class="hero-cta" href="#journal">Meet the journal</a>
+        <a class="hero-cta" href="https://instagram.com/its.neha.journal" target="_blank">Follow the journey</a>
+      </div>
     </div>
     <div class="hero-right">
       <div class="hero-number">01</div>
@@ -561,6 +611,74 @@
         that were never really theirs. This is a space to unlearn all of that. 
         Honest, unfiltered, and always in progress.
       </p>
+    </div>
+  </section>
+
+  <!-- THE JOURNAL -->
+  <section class="jr" id="journal">
+    <div>
+      <h2 class="j-title reveal">De<br/><span>cide.</span></h2>
+      <p class="j-by reveal">Clarity Journal by Neha Singh</p>
+      <p class="j-lede reveal">A daily decision journal for the overthinker who has thought about it enough. One page a day to name what you’re avoiding, make the choice, and take one step.</p>
+      <ul class="why reveal">
+        <li><span><b>Questions, not blank pages.</b> Every page asks the five custom questions that clear your head.</span></li>
+        <li><span><b>A place for the noise.</b> The Mental Static box catches the thoughts that keep looping.</span></li>
+        <li><span><b>Help when you’re stuck.</b> The first two questions come with “Stuck? Try:” hints.</span></li>
+        <li><span><b>One clear step a day.</b> You finish each page knowing what to do today and tomorrow.</span></li>
+        <li><span><b>Everything to start.</b> Journal, EXECUTE notepad, bookmark and cotton bag in one order.</span></li>
+      </ul>
+      <p class="j-tag reveal">Stop avoiding. Start choosing.</p>
+      <div class="cta-row reveal">
+        <a class="jcta p" href="https://ig.me/m/its.neha.journal" target="_blank" rel="noopener">DM us to order</a>
+        <a class="jcta" href="#box">See what’s inside</a>
+      </div>
+    </div>
+    <div class="media reveal">
+      <video id="loopClip" src="assets/decide-loop.mp4" poster="assets/decide-loop-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="The Decide journal, black with a gold cover"></video>
+    </div>
+  </section>
+
+  <!-- HOW IT HELPS -->
+  <section class="jr" id="overthinking">
+    <div class="media reveal">
+      <img src="assets/execute-notepad.jpg" alt="The Decide journal beside the EXECUTE notepad: Clarity is not found in thought. It is forged through decision." loading="lazy" width="900" height="1600"/>
+    </div>
+    <div>
+      <h2 class="j-h2 reveal">Overthinking isn’t too much thinking. It’s a decision left open.</h2>
+      <ul class="pts">
+        <li class="reveal"><b>It empties your head.</b><p>Once a thought is on paper, it has less room to loop. The Mental Static box is there for exactly that.</p></li>
+        <li class="reveal"><b>It makes the vague specific.</b><p>“I feel stuck” becomes “I’m avoiding this one conversation.” A named question is easier to answer.</p></li>
+        <li class="reveal"><b>It turns clarity into action.</b><p>More thinking rarely brings clarity; choosing does. Every page ends with one step you can take today.</p></li>
+      </ul>
+      <p class="j-lede reveal">Every page asks you five custom questions, written to take you from the loop in your head to one clear step.</p>
+      <ol class="steps">
+        <li class="reveal"><b>The Question I Am Avoiding</b><p>Say the thing you keep circling, in one sentence. A vague worry becomes a question you can actually answer.</p></li>
+        <li class="reveal"><b>The Choice I Am Defining</b><p>Turn the question into real options and pick one. Overthinking lives in the maybe; clarity starts when you choose.</p></li>
+        <li class="reveal dump"><b>Mental Static</b><p>A box to empty the noise into. No neat handwriting, no logic. It stops replaying once it’s on paper.</p></li>
+        <li class="reveal"><b>My One Clear Step Today</b><p>One action small enough to finish today. Not a plan. A step.</p></li>
+        <li class="reveal"><b>Tomorrow’s Follow-Through</b><p>Write what you’ll do next. The loop closes when you follow through.</p></li>
+      </ol>
+      <p class="j-note reveal">Not therapy. Not a cure. Just a daily page that makes you choose.</p>
+    </div>
+  </section>
+
+  <!-- PRODUCT DETAILS -->
+  <section class="jr" id="box">
+    <div>
+      <h2 class="j-h2 reveal">What comes in the box</h2>
+      <dl class="spec">
+        <div class="reveal"><dt>Inside</dt><dd>Decide journal, EXECUTE notepad, bookmark and a Clarity Journal cotton bag</dd></div>
+        <div class="reveal"><dt>Journal</dt><dd>A5 · 100 GSM paper · gold-foil, matt cover</dd></div>
+        <div class="reveal"><dt>Order</dt><dd>DM us to place an order, or use the WhatsApp link in our Instagram bio.</dd></div>
+        <div class="reveal"><dt>Payment</dt><dd>Prepaid, online. No cash on delivery.</dd></div>
+      </dl>
+      <div class="cta-row reveal">
+        <a class="jcta p" href="https://ig.me/m/its.neha.journal" target="_blank" rel="noopener">DM us to order</a>
+        <a class="jcta" href="https://instagram.com/its.neha.journal" target="_blank" rel="noopener">WhatsApp link in our bio</a>
+      </div>
+    </div>
+    <div class="media reveal">
+      <video src="assets/unboxing.mp4" poster="assets/unboxing-poster.jpg" controls playsinline preload="metadata" aria-label="Unboxing the Clarity Journal bundle"></video>
     </div>
   </section>
 
@@ -663,6 +781,10 @@
     }, { threshold: 0.1 });
 
     reveals.forEach(el => observer.observe(el));
+
+    // Respect reduced motion: don't autoplay the loop
+    const loop = document.getElementById('loopClip');
+    if (loop && matchMedia('(prefers-reduced-motion: reduce)').matches) { loop.removeAttribute('autoplay'); loop.pause(); loop.controls = true; }
   </script> <!-- Contact Section -->
 <section style="text-align:center; padding:48px 20px; border-top:1px solid rgba(200,169,126,0.15);">
   <p style="font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:rgba(200,169,126,0.45); margin-bottom:14px;">
