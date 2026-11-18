@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7PEDSNXD1X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7PEDSNXD1X');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Neha — Mindset & Clarity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f0;
+      --mid: #888;
+      --border: rgba(255,255,255,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--white);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(245,245,240,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), width 0.3s, height 0.3s;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Grain Overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.35;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+      mix-blend-mode: difference;
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 10vw, 10rem);
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+
+    .hero-title em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 0.78em;
+      display: block;
+      color: var(--white);
+    }
+
+    .hero-sub {
+      margin-top: 32px;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: rgba(245,245,240,0.55);
+      max-width: 340px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--white);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+      transition: gap 0.3s;
+    }
+    .hero-cta:hover { gap: 22px; }
+    .hero-cta::after {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--white);
+      display: block;
+      transition: width 0.3s;
+    }
+    .hero-cta:hover::after { width: 64px; }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .hero-number {
+      position: absolute;
+      right: 0; top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(12rem, 24vw, 22rem);
+      color: rgba(245,245,240,0.04);
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-vertical {
+      position: absolute;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeIn 1s 1.2s forwards;
+    }
+
+    .hero-vertical span {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--mid));
+      animation: scrollLine 2s 1.5s infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 48px;
+    }
+
+    /* ABOUT */
+    .about {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      padding-top: 6px;
+    }
+
+    .about-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.3;
+      margin-bottom: 32px;
+    }
+
+    .about-body h2 em {
+      font-style: italic;
+      color: rgba(245,245,240,0.5);
+    }
+
+    .about-body p {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: rgba(245,245,240,0.55);
+      max-width: 560px;
+    }
+
+    /* SERIES */
+    .series {
+      padding: 80px 48px 120px;
+    }
+
+    .series-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .series-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .series-header a {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .series-header a:hover { color: var(--white); border-color: var(--white); }
+
+    .series-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .series-card {
+      background: rgba(255,255,255,0.03);
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: none;
+    }
+    .series-card:hover { background: rgba(255,255,255,0.06); }
+
+    .series-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--white);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      z-index: 0;
+    }
+    .series-card:hover::before { transform: scaleX(1); }
+    .series-card:hover * { color: var(--black) !important; position: relative; z-index: 1; }
+
+    .card-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: rgba(245,245,240,0.45);
+    }
+
+    /* QUOTE */
+    .quote-section {
+      padding: 100px 48px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      line-height: 0.6;
+      color: rgba(245,245,240,0.08);
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.45;
+      color: rgba(245,245,240,0.85);
+    }
+
+    .quote-text strong {
+      font-style: normal;
+      color: var(--white);
+    }
+
+    /* CONNECT */
+    .connect {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .connect h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+    }
+
+    .connect-links {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .connect-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--white);
+      transition: padding-left 0.3s;
+    }
+    .connect-item:hover { padding-left: 16px; }
+
+    .connect-item span:first-child {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .connect-item span:last-child {
+      font-size: 0.72rem;
+      color: var(--mid);
+      letter-spacing: 0.1em;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.7rem;
+      color: rgba(245,245,240,0.3);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: rgba(245,245,240,0.3);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 0 24px; }
+      .hero-right { display: none; }
+      .hero-left { padding-bottom: 60px; padding-top: 120px; }
+      .divider { margin: 0 24px; }
+      .about { grid-template-columns: 1fr; gap: 24px; padding: 80px 24px; }
+      .series { padding: 60px 24px 80px; }
+      .series-grid { grid-template-columns: 1fr; }
+      .series-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .quote-section { padding: 80px 24px; grid-template-columns: 1fr; gap: 8px; }
+      .connect { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+    }
+
+    /* JOURNAL */
+    :root { --gold: #c8a97e; }
+    .jr { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 120px 48px; border-top: 1px solid var(--border); }
+    .media { display: flex; justify-content: center; }
+    .media video, .media img { width: 100%; max-width: 360px; aspect-ratio: 9/16; object-fit: cover; display: block; background: #111; border: 1px solid var(--border); cursor: auto; }
+    .j-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 11vw, 9.5rem); line-height: 0.9; }
+    .j-title span { color: var(--gold); }
+    .j-by { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: rgba(245,245,240,0.7); margin: 18px 0 28px; }
+    .j-lede { font-size: 0.95rem; line-height: 1.85; color: rgba(245,245,240,0.6); max-width: 480px; }
+    .j-tag { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--gold); margin: 28px 0 36px; }
+    .j-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.25; margin-bottom: 24px; max-width: 560px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0 40px; }
+    .jcta { display: inline-flex; align-items: center; gap: 14px; margin-top: 12px; color: var(--white); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; transition: gap 0.3s; }
+    .jcta::after { content: ''; width: 40px; height: 1px; background: currentColor; transition: width 0.3s; }
+    .jcta:hover { gap: 22px; }
+    .jcta:hover::after { width: 64px; }
+    .jcta.p { color: var(--gold); }
+    .steps { list-style: none; counter-reset: s; margin-top: 36px; max-width: 560px; }
+    .steps li { counter-increment: s; display: grid; grid-template-columns: 44px 1fr; gap: 6px 16px; padding: 22px 0; border-top: 1px solid var(--border); }
+    .steps li::before { content: counter(s); grid-row: span 2; font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; line-height: 1; color: var(--gold); }
+    .steps b { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.35rem; }
+    .steps p { font-size: 0.85rem; line-height: 1.7; color: rgba(245,245,240,0.5); }
+    .steps li.dump { border: 1px dashed rgba(200,169,126,0.55); padding: 22px 16px; margin: -1px 0; }
+    .j-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: rgba(245,245,240,0.6); border-top: 1px solid var(--border); padding-top: 22px; max-width: 560px; }
+    .spec { max-width: 560px; margin-bottom: 28px; }
+    .spec div { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .spec dt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid); padding-top: 3px; }
+    .spec dd { font-size: 0.95rem; line-height: 1.6; color: rgba(245,245,240,0.8); }
+    .why, .pts { list-style: none; max-width: 560px; }
+    .why { margin: 28px 0 8px; }
+    .why li { display: flex; gap: 14px; padding: 12px 0; font-size: 0.92rem; line-height: 1.6; color: rgba(245,245,240,0.6); }
+    .why li::before { content: ''; flex: none; width: 14px; height: 1px; background: var(--gold); margin-top: 0.85em; }
+    .why b { font-weight: 400; color: var(--white); }
+    .pts { margin: 28px 0 36px; }
+    .pts li { padding: 20px 0; border-top: 1px solid var(--border); }
+    .pts li:last-child { border-bottom: 1px solid var(--border); }
+    .pts b { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.35rem; margin-bottom: 6px; }
+    .pts p { font-size: 0.85rem; line-height: 1.7; color: rgba(245,245,240,0.5); }
+    a:focus-visible, video:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+    .cta-row .hero-cta { margin-top: 44px; }
+    @media (max-width: 768px) {
+      .jr { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+      .spec div { grid-template-columns: 90px 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { .reveal { transition: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">its.neha.journal</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#journal">The Journal</a></li>
+      <li><a href="#series">The Series</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Mindset · Clarity · Unlearning</p>
+      <h1 class="hero-title">
+        UN<br/>LEARN
+        <em>with neha</em>
+      </h1>
+      <p class="hero-sub">
+        Not a guru. Not a life coach.<br/>
+        Just someone figuring it out — and talking about it honestly.
+      </p>
+      <div class="cta-row">
+        <a class="hero-cta" href="#journal">Meet the journal</a>
+        <a class="hero-cta" href="https://instagram.com/its.neha.journal" target="_blank">Follow the journey</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-number">01</div>
+      <div class="hero-vertical">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <p class="section-label reveal">About</p>
+    <div class="about-body">
+      <h2 class="reveal">
+        The things nobody tells you — <em>about growing up, letting go, and thinking clearly.</em>
+      </h2>
+      <p class="reveal">
+        I make content for Indian students and young adults who are quietly dealing with things 
+        they can't always explain — feeling stuck, overthinking, trying to fit into expectations 
+        that were never really theirs. This is a space to unlearn all of that. 
+        Honest, unfiltered, and always in progress.
+      </p>
+    </div>
+  </section>
+
+  <!-- THE JOURNAL -->
+  <section class="jr" id="journal">
+    <div>
+      <h2 class="j-title reveal">De<br/><span>cide.</span></h2>
+      <p class="j-by reveal">Clarity Journal by Neha Singh</p>
+      <p class="j-lede reveal">A daily decision journal for the overthinker who has thought about it enough. One page a day to name what you’re avoiding, make the choice, and take one step.</p>
+      <ul class="why reveal">
+        <li><span><b>Questions, not blank pages.</b> Every page asks the five custom questions that clear your head.</span></li>
+        <li><span><b>A place for the noise.</b> The Mental Static box catches the thoughts that keep looping.</span></li>
+        <li><span><b>Help when you’re stuck.</b> The first two questions come with “Stuck? Try:” hints.</span></li>
+        <li><span><b>One clear step a day.</b> You finish each page knowing what to do today and tomorrow.</span></li>
+        <li><span><b>Everything to start.</b> Journal, EXECUTE notepad, bookmark and cotton bag in one order.</span></li>
+      </ul>
+      <p class="j-tag reveal">Stop avoiding. Start choosing.</p>
+      <div class="cta-row reveal">
+        <a class="jcta p" href="https://ig.me/m/its.neha.journal" target="_blank" rel="noopener">DM us to order</a>
+        <a class="jcta" href="#box">See what’s inside</a>
+      </div>
+    </div>
+    <div class="media reveal">
+      <video id="loopClip" src="decide-loop.mp4" poster="decide-loop-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="The Decide journal, black with a gold cover"></video>
+    </div>
+  </section>
+
+  <!-- HOW IT HELPS -->
+  <section class="jr" id="overthinking">
+    <div class="media reveal">
+      <img src="execute-notepad.jpg" alt="The Decide journal beside the EXECUTE notepad: Clarity is not found in thought. It is forged through decision." loading="lazy" width="900" height="1600"/>
+    </div>
+    <div>
+      <h2 class="j-h2 reveal">Overthinking isn’t too much thinking. It’s a decision left open.</h2>
+      <ul class="pts">
+        <li class="reveal"><b>It empties your head.</b><p>Once a thought is on paper, it has less room to loop. The Mental Static box is there for exactly that.</p></li>
+        <li class="reveal"><b>It makes the vague specific.</b><p>“I feel stuck” becomes “I’m avoiding this one conversation.” A named question is easier to answer.</p></li>
+        <li class="reveal"><b>It turns clarity into action.</b><p>More thinking rarely brings clarity; choosing does. Every page ends with one step you can take today.</p></li>
+      </ul>
+      <p class="j-lede reveal">Every page asks you five custom questions, written to take you from the loop in your head to one clear step.</p>
+      <ol class="steps">
+        <li class="reveal"><b>The Question I Am Avoiding</b><p>Say the thing you keep circling, in one sentence. A vague worry becomes a question you can actually answer.</p></li>
+        <li class="reveal"><b>The Choice I Am Defining</b><p>Turn the question into real options and pick one. Overthinking lives in the maybe; clarity starts when you choose.</p></li>
+        <li class="reveal dump"><b>Mental Static</b><p>A box to empty the noise into. No neat handwriting, no logic. It stops replaying once it’s on paper.</p></li>
+        <li class="reveal"><b>My One Clear Step Today</b><p>One action small enough to finish today. Not a plan. A step.</p></li>
+        <li class="reveal"><b>Tomorrow’s Follow-Through</b><p>Write what you’ll do next. The loop closes when you follow through.</p></li>
+      </ol>
+      <p class="j-note reveal">Not therapy. Not a cure. Just a daily page that makes you choose.</p>
+    </div>
+  </section>
+
+  <!-- PRODUCT DETAILS -->
+  <section class="jr" id="box">
+    <div>
+      <h2 class="j-h2 reveal">What comes in the box</h2>
+      <dl class="spec">
+        <div class="reveal"><dt>Inside</dt><dd>Decide journal, EXECUTE notepad, bookmark and a Clarity Journal cotton bag</dd></div>
+        <div class="reveal"><dt>Journal</dt><dd>A5 · 100 GSM paper · gold-foil, matt cover</dd></div>
+        <div class="reveal"><dt>Order</dt><dd>DM us to place an order, or use the WhatsApp link in our Instagram bio.</dd></div>
+        <div class="reveal"><dt>Payment</dt><dd>Prepaid, online. No cash on delivery.</dd></div>
+      </dl>
+      <div class="cta-row reveal">
+        <a class="jcta p" href="https://ig.me/m/its.neha.journal" target="_blank" rel="noopener">DM us to order</a>
+        <a class="jcta" href="https://instagram.com/its.neha.journal" target="_blank" rel="noopener">WhatsApp link in our bio</a>
+      </div>
+    </div>
+    <div class="media reveal">
+      <video src="unboxing.mp4" poster="unboxing-poster.jpg" controls playsinline preload="metadata" aria-label="Unboxing the Clarity Journal bundle"></video>
+    </div>
+  </section>
+
+  <!-- SERIES -->
+  <section class="series" id="series">
+    <div class="series-header reveal">
+      <h2>The Unlearn<br/>Series</h2>
+      <a href="https://www.instagram.com/p/DU3L2hKD44Y/" target="_blank">View all reels →</a>
+    </div>
+    <div class="series-grid">
+      <div class="series-card reveal">
+        <span class="card-num">001</span>
+        <p class="card-title">Productivity guilt is not discipline</p>
+        <p class="card-desc">Rest isn't a reward. The belief that you have to earn rest is the first thing to unlearn.</p>
+      </div>
+      <div class="series-card reveal">
+        <span class="card-num">002</span>
+        <p class="card-title">You don't have to be consistent to be worthy</p>
+        <p class="card-desc">Showing up imperfectly still counts. The pressure to be "on" every day is exhausting and false.</p>
+      </div>
+      <div class="series-card reveal">
+        <span class="card-num">003</span>
+        <p class="card-title">Har cheez explain karna zaroori nahi</p>
+        <p class="card-desc">You don't owe anyone a reason for your boundaries, your choices, or your silence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <div class="quote-section">
+    <div class="quote-mark reveal">"</div>
+    <p class="quote-text reveal">
+      clarity isn't a destination.<br/>
+      it's just <strong>choosing to be honest with yourself</strong> — one thought at a time.
+    </p>
+  </div>
+
+  <!-- CONNECT -->
+  <section class="connect" id="connect">
+    <h2 class="reveal">Let's<br/>connect.</h2>
+    <div class="connect-links">
+      <a class="connect-item reveal" href="https://instagram.com/its.neha.journal" target="_blank">
+        <span>Instagram</span>
+        <span>@its.neha.journal →</span>
+      </a>
+      <a class="connect-item reveal" href="https://www.instagram.com/p/DU3L2hKD44Y/" target="_blank">
+        <span>The Unlearn Series</span>
+        <span>Watch reels →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Neha · Mindset & Clarity</p>
+    <span class="footer-logo">its.neha.journal</span>
+    <p>Made with honesty.</p>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, .series-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width = '56px';
+        ring.style.height = '56px';
+        ring.style.borderColor = 'rgba(245,245,240,0.7)';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width = '36px';
+        ring.style.height = '36px';
+        ring.style.borderColor = 'rgba(245,245,240,0.4)';
+      });
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Respect reduced motion: don't autoplay the loop
+    const loop = document.getElementById('loopClip');
+    if (loop && matchMedia('(prefers-reduced-motion: reduce)').matches) { loop.removeAttribute('autoplay'); loop.pause(); loop.controls = true; }
+  </script> <!-- Contact Section -->
+<section style="text-align:center; padding:48px 20px; border-top:1px solid rgba(200,169,126,0.15);">
+  <p style="font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:rgba(200,169,126,0.45); margin-bottom:14px;">
+    Get In Touch
+  </p>
+  <a href="mailto:itsnehajournal@gmail.com"
+     style="font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:#c8a97e; text-decoration:none; letter-spacing:1px;">
+    itsnehajournal@gmail.com
+  </a>
+  <p style="font-family:'DM Sans',sans-serif; font-size:8px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.1); margin-top:20px;">
+    clarity journal · decide ✦
+  </p>
+</section>
+</body>
+</html>
